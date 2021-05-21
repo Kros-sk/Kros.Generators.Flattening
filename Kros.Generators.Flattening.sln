@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kros.Generators.Flattening", "src\Kros.Generators.Flattening\Kros.Generators.Flattening.csproj", "{690F1B4E-D46B-4DF7-8123-B0C435D93DA5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kros.Generators.Flattening.Tests", "tests\Kros.Generators.Flattening.Tests\Kros.Generators.Flattening.Tests.csproj", "{E1280D91-19BC-4414-ACF6-5D6DBA56397F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{690F1B4E-D46B-4DF7-8123-B0C435D93DA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{690F1B4E-D46B-4DF7-8123-B0C435D93DA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{690F1B4E-D46B-4DF7-8123-B0C435D93DA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{690F1B4E-D46B-4DF7-8123-B0C435D93DA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1280D91-19BC-4414-ACF6-5D6DBA56397F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1280D91-19BC-4414-ACF6-5D6DBA56397F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1280D91-19BC-4414-ACF6-5D6DBA56397F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1280D91-19BC-4414-ACF6-5D6DBA56397F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A959B96C-D31F-4855-A1A3-CE7630B13B4F}
+	EndGlobalSection
+EndGlobal

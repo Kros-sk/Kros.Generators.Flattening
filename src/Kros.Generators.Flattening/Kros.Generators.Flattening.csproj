@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Version>1.0.0</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Authors>KROS a. s.</Authors>
+    <Company>KROS a. s.</Company>
+    <Description>General utilities and helpers for building ASP.NET Core WEB API</Description>
+    <PackageProjectUrl>https://github.com/Kros-sk/Kros.Generators.Flattening</PackageProjectUrl>
+    <PackageReleaseNotes>https://github.com/Kros-sk/Kros.Generators.Flattening/releases</PackageReleaseNotes>
+    <PackageTags>Generators;Helpers;Utils;Flattening</PackageTags>
+    <RepositoryUrl>https://github.com/Kros-sk/Kros.Generators.Flattening</RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\packageIcon.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="GeneratedAttributes.cs" />
+    <EmbeddedResource Include="FlatClassTemplate.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.1" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.8.0" PrivateAssets="all" />
+    <!--If you are targeting netstandard2.0 or .NET Framework 4.7.2+, in order to compile Scriban you will need these NuGet package references (that can come from a dependency that you already have):-->
+    <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
+    <PackageReference Include="Scriban" Version="3.7.0" IncludeAssets="Build" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <PackageScribanIncludeSource>true</PackageScribanIncludeSource>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+  </ItemGroup>
+
+</Project>
