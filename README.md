@@ -1,0 +1,1 @@
+# Kros.Generators.Flattening
