@@ -5,7 +5,12 @@ VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kros.Generators.Flattening", "src\Kros.Generators.Flattening\Kros.Generators.Flattening.csproj", "{690F1B4E-D46B-4DF7-8123-B0C435D93DA5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kros.Generators.Flattening.Tests", "tests\Kros.Generators.Flattening.Tests\Kros.Generators.Flattening.Tests.csproj", "{E1280D91-19BC-4414-ACF6-5D6DBA56397F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kros.Generators.Flattening.IntegrationTests", "tests\Kros.Generators.Flattening.Tests\Kros.Generators.Flattening.IntegrationTests.csproj", "{E1280D91-19BC-4414-ACF6-5D6DBA56397F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{99AE731E-8AEA-4B94-B28D-FDAD4F20ABD7}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
