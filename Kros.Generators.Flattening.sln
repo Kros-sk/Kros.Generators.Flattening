@@ -5,12 +5,16 @@ VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kros.Generators.Flattening", "src\Kros.Generators.Flattening\Kros.Generators.Flattening.csproj", "{690F1B4E-D46B-4DF7-8123-B0C435D93DA5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kros.Generators.Flattening.IntegrationTests", "tests\Kros.Generators.Flattening.Tests\Kros.Generators.Flattening.IntegrationTests.csproj", "{E1280D91-19BC-4414-ACF6-5D6DBA56397F}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{99AE731E-8AEA-4B94-B28D-FDAD4F20ABD7}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kros.Generators.Flattening.Demo", "demo\Kros.Generators.Flattening.Demo\Kros.Generators.Flattening.Demo.csproj", "{88D5B55F-8653-445E-9E5D-03114C47A6B5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kros.Generators.Flattening.IntegrationTests", "tests\Kros.Generators.Flattening.IntegrationTests\Kros.Generators.Flattening.IntegrationTests.csproj", "{7F1F496A-E672-4E33-BDB5-3CAF65A8B27A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kros.Generators.Flattening.Tests", "tests\Kros.Generators.Flattening.Tests\Kros.Generators.Flattening.Tests.csproj", "{F9C0BEA1-09BF-4EEE-9A26-09E767F73FFE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,10 +26,18 @@ Global
 		{690F1B4E-D46B-4DF7-8123-B0C435D93DA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{690F1B4E-D46B-4DF7-8123-B0C435D93DA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{690F1B4E-D46B-4DF7-8123-B0C435D93DA5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E1280D91-19BC-4414-ACF6-5D6DBA56397F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E1280D91-19BC-4414-ACF6-5D6DBA56397F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E1280D91-19BC-4414-ACF6-5D6DBA56397F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E1280D91-19BC-4414-ACF6-5D6DBA56397F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88D5B55F-8653-445E-9E5D-03114C47A6B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88D5B55F-8653-445E-9E5D-03114C47A6B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88D5B55F-8653-445E-9E5D-03114C47A6B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88D5B55F-8653-445E-9E5D-03114C47A6B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F1F496A-E672-4E33-BDB5-3CAF65A8B27A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F1F496A-E672-4E33-BDB5-3CAF65A8B27A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F1F496A-E672-4E33-BDB5-3CAF65A8B27A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F1F496A-E672-4E33-BDB5-3CAF65A8B27A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9C0BEA1-09BF-4EEE-9A26-09E767F73FFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9C0BEA1-09BF-4EEE-9A26-09E767F73FFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9C0BEA1-09BF-4EEE-9A26-09E767F73FFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9C0BEA1-09BF-4EEE-9A26-09E767F73FFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

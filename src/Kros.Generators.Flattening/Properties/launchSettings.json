@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Kros.Generators.Flattening": {
+      "commandName": "DebugRoslynComponent",
+      "targetProject": "..\\..\\demo\\Kros.Generators.Flattening.Demo\\Kros.Generators.Flattening.Demo.csproj"
+    }
+  }
+}

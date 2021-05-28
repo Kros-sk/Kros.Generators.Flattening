@@ -10,18 +10,9 @@ namespace Kros.Generators.Flattening
     public class FlattenAttribute: Attribute
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="FlattenAttribute"/> class.
+        /// Gets or set the type of the source class.
         /// </summary>
-        /// <param name="source">The source class type.</param>
-        public FlattenAttribute(Type sourceType)
-        {
-            SourceType = sourceType;
-        }
-
-        /// <summary>
-        /// Gets the type of the source class.
-        /// </summary>
-        public Type SourceType { get; }
+        public Type SourceType { get; init; }
 
         /// <summary>
         /// Gets or sets the properties for skip. These properties will not be generated to the flat class.
@@ -45,18 +36,9 @@ namespace Kros.Generators.Flattening
     public class FlattenPropertyNameAttribute : Attribute
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="FlattenPropertyNameAttribute"/> class.
+        /// Gets or set the name of the source property. (e.g.: `Contact.Addres.Streed`)
         /// </summary>
-        /// <param name="source">The source property name.</param>
-        public FlattenPropertyNameAttribute(string sourcePropertyName)
-        {
-            SourcePropertyName = sourcePropertyName;
-        }
-
-        /// <summary>
-        /// Gets the name of the source property. (e.g.: `Contact.Addres.Streed`)
-        /// </summary>
-        public string SourcePropertyName { get; }
+        public string SourcePropertyName { get; init; }
 
         /// <summary>
         /// Get or set new name for property.

@@ -11,6 +11,9 @@ namespace {{ Namespace }}
     [GeneratedCode("Kros.Generators.Flattening", "{{ Version }}")]
     [CompilerGenerated]
     {{ Modifier }} class {{ Name }}
-    {        
+    {
+    {{- for prop in Properties }}
+        {{ prop.Modifier }} {{ prop.Type }} {{ prop.Name }} { get; set; }
+    {{ end -}}
     }
 }
