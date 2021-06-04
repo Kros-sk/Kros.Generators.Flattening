@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Kros.Generators.Flattening.Demo
+﻿namespace Kros.Generators.Flattening.Demo
 {
     class Program
     {
