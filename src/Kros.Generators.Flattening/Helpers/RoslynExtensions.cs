@@ -49,14 +49,42 @@ namespace Kros.Generators.Flattening
             string argumentName,
             SemanticModel semanticModel)
         {
-            TypeSyntax typeOfExpression = (attribute
-               .ArgumentList
-               .Arguments
-               .First(p => p.NameEquals.Name.Identifier.ValueText == argumentName).Expression as TypeOfExpressionSyntax).Type;
+            TypeSyntax typeOfExpression = attribute.GetArgument<TypeOfExpressionSyntax>(argumentName).Type;
             TypeInfo typeInfo = semanticModel.GetTypeInfo(typeOfExpression);
 
             return ((INamedTypeSymbol)typeInfo.Type);
         }
+
+        public static HashSet<string> GetArrayArguments(
+            this AttributeSyntax attribute,
+            string argumentName,
+            SemanticModel semanticModel)
+        {
+            HashSet<string> ret = new();
+            SeparatedSyntaxList<ExpressionSyntax>? expressions =
+                attribute.GetArgument<ArrayCreationExpressionSyntax>(argumentName)?.Initializer.Expressions;
+
+            if (expressions != null)
+            {
+                foreach (var expression in expressions)
+                {
+                    Optional<object> value = semanticModel.GetConstantValue(expression);
+                    if (value.HasValue)
+                    {
+                        ret.Add(value.Value.ToString());
+                    }
+                }
+            }
+
+            return ret;
+        }
+
+        private static T GetArgument<T>(this AttributeSyntax attribute, string argumentName)
+            where T: ExpressionSyntax
+            => attribute
+                .ArgumentList
+                .Arguments
+                .FirstOrDefault(p => p.NameEquals.Name.Identifier.ValueText == argumentName)?.Expression as T;
 
         public static IEnumerable<ITypeSymbol> GetBaseTypesAndThis(this ITypeSymbol type)
         {

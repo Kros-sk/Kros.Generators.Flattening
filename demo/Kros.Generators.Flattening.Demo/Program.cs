@@ -30,7 +30,8 @@ namespace Kros.Generators.Flattening.Demo
         public List<string> Addresses { get; set; }
     }
 
-    [Flatten(SourceType = typeof(Person))]
+    [Flatten(SourceType = typeof(Person),
+        Skip = new string[] { nameof(Person.Id), "Name" } )]
     public partial class PersonFlat
     {
 

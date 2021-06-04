@@ -31,11 +31,12 @@ namespace Kros.Generators.Flattening.IntegrationTests
         public void ShouldSkipDefinedProperties()
         {
             var actual = new ClassWithSimplePropertiesFlatWithSkipedProperties();
-            //actual.Should()
-            //    .HaveProperty(p => p.Id)
-            //    ...
-            //    .HaveProperty(p => p.Name)
-            //    .Evaulate();
+            actual.Should()
+                .HaveProperty(p => p.Id)
+                .HaveProperty(p => p.Name)
+                .HaveProperty(p => p.BirthDay)
+                .HaveProperty(p => p.Age)
+                .NoOther();
         }
 
         [Fact]

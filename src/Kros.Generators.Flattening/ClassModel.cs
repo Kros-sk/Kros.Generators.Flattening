@@ -66,10 +66,11 @@ namespace Kros.Generators.Flattening
             var properties = new List<PropertyModel>();
             var existingProperties = new HashSet<string>(flatClass.GetProperties().Select(p => p.Name));
             var sourceType = _flattenAttribute.GetTypeArgument(nameof(FlattenAttribute.SourceType), _semanticModel);
+            var propertiesToSkip = _flattenAttribute.GetArrayArguments(nameof(FlattenAttribute.Skip), _semanticModel);
 
             foreach (IPropertySymbol property in sourceType.GetProperties())
             {
-                if (!existingProperties.Contains(property.Name))
+                if (!existingProperties.Contains(property.Name) && !propertiesToSkip.Contains(property.Name))
                 {
                     properties.Add(
                         new(property.DeclaredAccessibility.ToString().ToLower(), property.Type.ToString(), property.Name));
