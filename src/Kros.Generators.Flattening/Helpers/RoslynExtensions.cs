@@ -62,7 +62,8 @@ namespace Kros.Generators.Flattening
         public static HashSet<string> GetArrayArguments(
             this AttributeSyntax attribute,
             string argumentName,
-            SemanticModel semanticModel)
+            SemanticModel semanticModel,
+            Func<string, string> processItem)
         {
             HashSet<string> ret = new();
             SeparatedSyntaxList<ExpressionSyntax>? expressions =
@@ -75,7 +76,7 @@ namespace Kros.Generators.Flattening
                     Optional<object> value = semanticModel.GetConstantValue(expression);
                     if (value.HasValue)
                     {
-                        ret.Add(value.Value.ToString());
+                        ret.Add(processItem(value.Value.ToString()));
                     }
                 }
             }

@@ -7,40 +7,44 @@ namespace Kros.Generators.Flattening.Demo
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-            PersonFlat p = new();
+            DocumentFlat document = new();
+
+            document.OwnerAddressCity = "Žilina";
+            document.OwnerAddressStreet = "Rudnaya";
+            document.OwnerName = "Milan";
+            document.CollaboratorCity = "Skalité";
+            document.CollaboratorStreet = "Rieky";
+            document.CollaboratorName = "Jano";
+            document.Name = "new document";
         }
     }
 
-    public class Person
+    public class Document
     {
-        public int Id { get; set; }
+        public Contact Owner { get; set; }
+
+        public Contact Collaborator { get; set; }
 
         public string Name { get; set; }
-
-        public MyEnum Foo { get; set; }
-
-        string WithoutModifier { get; set; }
-
-        protected string Protected { get; set; }
-
-        internal string Internal { get; set; }
-
-        private string Private { get; set; }
-
-        public List<string> Addresses { get; set; }
     }
 
-    [Flatten(SourceType = typeof(Person))]
-    [FlattenPropertyName(SourcePropertyName = nameof(Person.Name), Name = "FirstName")]
-    [FlattenPropertyName(SourcePropertyName = nameof(Person.Id), Name = "Identifier")]
-    public partial class PersonFlat
+    public class Contact
     {
+        public string Name { get; set; }
 
+        public Address Address { get; set; }
     }
 
-    public enum MyEnum
+    public class Address
     {
-        Value1
+        public string City { get; set; }
+        public string Street { get; set; }
+    }
+
+    [Flatten(SourceType = typeof(Document))]
+    [FlattenPropertyName(SourcePropertyName = "Ownter.Address.City", Name = "Town")]
+    [FlattenPropertyName(SourcePropertyName = "Collaborator.Address", Name = "")]
+    public partial class DocumentFlat
+    {
     }
 }

@@ -43,17 +43,6 @@ namespace Kros.Generators.Flattening
         /// <summary>
         /// Get or set new name for property.
         /// </summary>
-        /// <remarks>
-        /// Exactly one of the <see cref="Name"/> or <see cref="Prefix"/> properties must be set.
-        /// </remarks>
         public string Name { get; init; }
-
-        /// <summary>
-        /// Gets or sets the prefix. (e.g.: `Contact`)
-        /// </summary>
-        /// <remarks>
-        /// Exactly one of the <see cref="Name"/> or <see cref="Prefix"/> properties must be set.
-        /// </remarks>
-        public string Prefix { get; init; }
     }
 }

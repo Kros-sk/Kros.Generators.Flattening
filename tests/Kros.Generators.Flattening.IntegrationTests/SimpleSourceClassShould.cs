@@ -9,7 +9,6 @@ namespace Kros.Generators.Flattening.IntegrationTests
         public void BeFlattenToEmptyClassWhenDoesnotHaveProperties()
         {
             var actual = new EmptyClassFlat();
-
             actual.Should().HaveNoProperties();
         }
 
