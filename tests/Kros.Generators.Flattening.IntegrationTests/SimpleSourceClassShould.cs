@@ -43,22 +43,28 @@ namespace Kros.Generators.Flattening.IntegrationTests
         public void RenameDefinedProperties()
         {
             var actual = new ClassWithSimplePropertiesFlatWIthRenamedProperties();
-            //actual.Should()
-            //    .HaveProperty(p => p.Id)
-            //    ...
-            //    .HaveProperty(p => p.Name)
-            //    .Evaulate();
+            actual.Should()
+                .HaveProperty(p => p.Id)
+                .HaveProperty(p => p.FirstName)
+                .HaveProperty(p => p.BirthDay)
+                .HaveProperty(p => p.Payout)
+                .HaveProperty(p => p.Age)
+                .HaveProperty(p => p.IsMan)
+                .NoOther();
         }
 
         [Fact]
         public void ShouldAcceptExistingProperties()
         {
             var actual = new ClassWithSimplePropertiesFlatAlreadyContainsProperty();
-            //actual.Should()
-            //    .HaveProperty(p => p.Id)
-            //    ...
-            //    .HaveProperty(p => p.Name)
-            //    .Evaulate();
+            actual.Should()
+                .HaveProperty(p => p.Id)
+                .HaveProperty(p => p.Name)
+                .HaveProperty(p => p.BirthDay)
+                .HaveProperty(p => p.Salary)
+                .HaveProperty(p => p.Age)
+                .HaveProperty(p => p.IsMan)
+                .NoOther();
         }
     }
 
@@ -67,7 +73,7 @@ namespace Kros.Generators.Flattening.IntegrationTests
     [Flatten(SourceType = typeof(EmptyClass))]
     public partial class EmptyClassFlat : BaseClass { }
 
-    public class ClassWithSimpleProperties: BaseClass
+    public class ClassWithSimpleProperties : BaseClass
     {
         public int Id { get; set; }
 

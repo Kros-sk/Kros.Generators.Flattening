@@ -18,11 +18,15 @@ namespace Kros.Generators.Flattening
                        .SelectMany(SelectWithAttributes(attributeName))
                        .Any();
 
-        public static AttributeSyntax GetAttribute(this ClassDeclarationSyntax classDeclaration, string attributeName)
+        public static IEnumerable<AttributeSyntax> GetAttributes(
+            this ClassDeclarationSyntax classDeclaration,
+            string attributeName)
             => classDeclaration
                 .AttributeLists
-                    .SelectMany(SelectWithAttributes(attributeName))
-                    .Single();
+                    .SelectMany(SelectWithAttributes(attributeName));
+
+        public static AttributeSyntax GetAttribute(this ClassDeclarationSyntax classDeclaration, string attributeName)
+            => classDeclaration.GetAttributes(attributeName).Single();
 
         private static Func<AttributeListSyntax, IEnumerable<AttributeSyntax>> SelectWithAttributes(string attributeName)
             => l => l?.Attributes.Where(a => (a.Name as IdentifierNameSyntax)?.Identifier.Text == attributeName);
@@ -77,6 +81,17 @@ namespace Kros.Generators.Flattening
             }
 
             return ret;
+        }
+
+        public static string GetConstantAttribute(
+            this AttributeSyntax attribute,
+            string argumentName,
+            SemanticModel semanticModel)
+        {
+            var expression = attribute.GetArgument<ExpressionSyntax>(argumentName);
+            Optional<object> value = semanticModel.GetConstantValue(expression);
+
+            return value.HasValue ? value.Value.ToString() : null;
         }
 
         private static T GetArgument<T>(this AttributeSyntax attribute, string argumentName)

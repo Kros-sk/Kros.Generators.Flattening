@@ -50,8 +50,8 @@ namespace Kros.Generators.Flattening.IntegrationTests
         }
 
         [Flatten(SourceType = typeof(Document))]
-        [FlattenPropertyName(SourcePropertyName = "Supplier.Address.City", Name = "SupplierAddressTown")]
-        [FlattenPropertyName(SourcePropertyName = "Purchaser.Address", Prefix = "Purchaser")]
+        //[FlattenPropertyName(SourcePropertyName = "Supplier.Address.City", Name = "SupplierAddressTown")]
+        //        [FlattenPropertyName(SourcePropertyName = "Purchaser.Address", Prefix = "Purchaser")]
         public partial class DocumentFlatWithRenamedPriperties
         {
 

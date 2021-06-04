@@ -1,6 +1,7 @@
 ﻿using Kros.Generators.Flattening.Helpers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -13,12 +14,14 @@ namespace Kros.Generators.Flattening
         private const string Attribute = "Attribute";
         private const string SourceTypeArgName = nameof(FlattenAttribute.SourceType);
         public static readonly string FlattenAttributeName = nameof(FlattenAttribute).TrimEnd(Attribute);
+        public static readonly string FlattenPropertyNameAttributeName = nameof(FlattenPropertyNameAttribute).TrimEnd(Attribute);
 
         private AttributeSyntax _flattenAttribute;
         private SemanticModel _semanticModel;
         private ClassDeclarationSyntax _syntax;
         private Compilation _compilation;
         private CompilationUnitSyntax _root;
+        private GeneratorExecutionContext _context;
 
         public string Version => Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
 
@@ -46,6 +49,7 @@ namespace Kros.Generators.Flattening
             model._compilation = compilation;
             model._semanticModel = compilation.GetSemanticModel(syntax.SyntaxTree);
             model._flattenAttribute = flattenAttribute;
+            model._context = context;
 
             model.BasicInformation();
             model.AddProperties();
@@ -67,17 +71,54 @@ namespace Kros.Generators.Flattening
             var existingProperties = new HashSet<string>(flatClass.GetProperties().Select(p => p.Name));
             var sourceType = _flattenAttribute.GetTypeArgument(nameof(FlattenAttribute.SourceType), _semanticModel);
             var propertiesToSkip = _flattenAttribute.GetArrayArguments(nameof(FlattenAttribute.Skip), _semanticModel);
+            var namigMap = GetNamigMap();
 
             foreach (IPropertySymbol property in sourceType.GetProperties())
             {
                 if (!existingProperties.Contains(property.Name) && !propertiesToSkip.Contains(property.Name))
                 {
+                    string name = GetName(namigMap, property);
                     properties.Add(
-                        new(property.DeclaredAccessibility.ToString().ToLower(), property.Type.ToString(), property.Name));
+                        new(property.DeclaredAccessibility.ToString().ToLower(), property.Type.ToString(), name));
                 }
             }
 
             Properties = properties;
+        }
+
+        private static string GetName(IDictionary<string, string> namigMap, IPropertySymbol property)
+            => namigMap.ContainsKey(property.Name) ? namigMap[property.Name] : property.Name;
+
+        private IDictionary<string, string> GetNamigMap()
+        {
+            Dictionary<string, string> ret = new(StringComparer.CurrentCultureIgnoreCase);
+            var attributes = _syntax.GetAttributes(FlattenPropertyNameAttributeName);
+
+            foreach (var attribute in attributes)
+            {
+                if (!attribute.ContainsArguments(nameof(FlattenPropertyNameAttribute.SourcePropertyName)))
+                {
+                    _context.ReportMissingArgument(attribute, nameof(FlattenPropertyNameAttribute.SourcePropertyName));
+                    continue;
+                }
+
+                if (!attribute.ContainsArguments(nameof(FlattenPropertyNameAttribute.Name))
+                    && !attribute.ContainsArguments(nameof(FlattenPropertyNameAttribute.Prefix)))
+                {
+                    _context.ReportMissingArgument(
+                        attribute,
+                        $"{nameof(FlattenPropertyNameAttribute.Name)} or {nameof(FlattenPropertyNameAttribute.Prefix)}");
+                    continue;
+                }
+
+                string sourcePropertyName =
+                   attribute.GetConstantAttribute(nameof(FlattenPropertyNameAttribute.SourcePropertyName), _semanticModel);
+                string name =
+                    attribute.GetConstantAttribute(nameof(FlattenPropertyNameAttribute.Name), _semanticModel);
+                ret.Add(sourcePropertyName, name);
+            }
+
+            return ret;
         }
     }
 }

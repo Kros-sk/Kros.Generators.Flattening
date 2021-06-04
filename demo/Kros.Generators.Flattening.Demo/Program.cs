@@ -8,6 +8,7 @@ namespace Kros.Generators.Flattening.Demo
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
+            PersonFlat p = new();
         }
     }
 
@@ -30,8 +31,9 @@ namespace Kros.Generators.Flattening.Demo
         public List<string> Addresses { get; set; }
     }
 
-    [Flatten(SourceType = typeof(Person),
-        Skip = new string[] { nameof(Person.Id), "Name" } )]
+    [Flatten(SourceType = typeof(Person))]
+    [FlattenPropertyName(SourcePropertyName = nameof(Person.Name), Name = "FirstName")]
+    [FlattenPropertyName(SourcePropertyName = nameof(Person.Id), Name = "Identifier")]
     public partial class PersonFlat
     {
 
