@@ -14,8 +14,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kros.Generators.Flattening.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kros.Generators.Flattening.IntegrationTests", "tests\Kros.Generators.Flattening.IntegrationTests\Kros.Generators.Flattening.IntegrationTests.csproj", "{7F1F496A-E672-4E33-BDB5-3CAF65A8B27A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kros.Generators.Flattening.Tests", "tests\Kros.Generators.Flattening.Tests\Kros.Generators.Flattening.Tests.csproj", "{F9C0BEA1-09BF-4EEE-9A26-09E767F73FFE}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,10 +32,6 @@ Global
 		{7F1F496A-E672-4E33-BDB5-3CAF65A8B27A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F1F496A-E672-4E33-BDB5-3CAF65A8B27A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F1F496A-E672-4E33-BDB5-3CAF65A8B27A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F9C0BEA1-09BF-4EEE-9A26-09E767F73FFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F9C0BEA1-09BF-4EEE-9A26-09E767F73FFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F9C0BEA1-09BF-4EEE-9A26-09E767F73FFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F9C0BEA1-09BF-4EEE-9A26-09E767F73FFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

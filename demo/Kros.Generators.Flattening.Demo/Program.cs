@@ -6,7 +6,7 @@
         {
             DocumentFlat document = new();
 
-            document.OwnerAddressCity = "Žilina";
+            document.OwnerAddressTown = "Žilina";
             document.OwnerAddressStreet = "Rudnaya";
             document.OwnerName = "Milan";
             document.CollaboratorCity = "Skalité";
@@ -39,7 +39,7 @@
     }
 
     [Flatten(SourceType = typeof(Document))]
-    [FlattenPropertyName(SourcePropertyName = "Ownter.Address.City", Name = "Town")]
+    [FlattenPropertyName(SourcePropertyName = "Owner.Address.City", Name = "Town")]
     [FlattenPropertyName(SourcePropertyName = "Collaborator.Address", Name = "")]
     public partial class DocumentFlat
     {
