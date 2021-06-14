@@ -3,10 +3,11 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>latest</LangVersion>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IsRoslynComponent>true</IsRoslynComponent>
     <PackageIcon>icon.png</PackageIcon>
+    <BuildOutputTargetFolder>analyzers</BuildOutputTargetFolder>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -35,7 +36,7 @@
     <!--If you are targeting netstandard2.0 or .NET Framework 4.7.2+, in order to compile Scriban you will need these NuGet package references (that can come from a dependency that you already have):-->
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
-    <PackageReference Include="Scriban" Version="3.8.2" IncludeAssets="Build" />
+    <PackageReference Include="Scriban" Version="4.0.1" IncludeAssets="Build" />
   </ItemGroup>
 
   <PropertyGroup>
