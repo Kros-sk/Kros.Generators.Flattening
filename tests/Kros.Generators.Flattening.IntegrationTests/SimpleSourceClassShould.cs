@@ -6,7 +6,7 @@ namespace Kros.Generators.Flattening.IntegrationTests
     public class SimpleSourceClassShould
     {
         [Fact]
-        public void BeFlattenToEmptyClassWhenDoesnotHaveProperties()
+        public void BeFlattenToEmptyClassWhenDoesNotHaveProperties()
         {
             var actual = new EmptyClassFlat();
             actual.Should().HaveNoProperties();

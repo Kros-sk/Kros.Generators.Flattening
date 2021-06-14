@@ -21,7 +21,7 @@ namespace Kros.Generators.Flattening
         private Compilation _compilation;
         private CompilationUnitSyntax _root;
         private GeneratorExecutionContext _context;
-        private List<PropertyModel> _properties = new();
+        private readonly List<PropertyModel> _properties = new();
 
         public string Version => Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
 
@@ -51,10 +51,19 @@ namespace Kros.Generators.Flattening
             model._flattenAttribute = flattenAttribute;
             model._context = context;
 
-            model.BasicInformation();
-            model.AddProperties();
+            try
+            {
+                model.BasicInformation();
+                model.AddProperties();
 
-            return model;
+                return model;
+            }
+            catch(Exception ex)
+            {
+                context.ReportException(ex);
+                return null;
+            }
+
         }
 
         private void BasicInformation()
@@ -141,7 +150,6 @@ namespace Kros.Generators.Flattening
                 if (!attribute.ContainsArguments(nameof(FlattenPropertyNameAttribute.Name)))
                 {
                     _context.ReportMissingArgument(attribute, nameof(FlattenPropertyNameAttribute.Name));
-
                     continue;
                 }
 

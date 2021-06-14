@@ -5,3 +5,4 @@
 Rule ID | Category | Severity | Notes
 --------|----------|----------|-------
 KRF001 | Flattening | Error | Diagnostic
+KRF002 | Flattening | Warning | GeneratorExecutionContextExtensions
