@@ -1,18 +1,25 @@
-﻿namespace Kros.Generators.Flattening.Demo
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace Kros.Generators.Flattening.Demo
 {
     class Program
     {
         static void Main(string[] args)
         {
-            DocumentFlat document = new();
+            DocumentFlat flat = new();
 
-            document.OwnerAddressTown = "Žilina";
-            document.OwnerAddressStreet = "Rudnaya";
-            document.OwnerName = "Milan";
-            document.CollaboratorCity = "Skalité";
-            document.CollaboratorStreet = "Rieky";
-            document.CollaboratorName = "Jano";
-            document.Name = "new document";
+            flat.OwnerAddressTown = "Žilina";
+            flat.OwnerAddressStreet = "Rudnaya";
+            flat.OwnerName = "Milan";
+            flat.CollaboratorCity = "Skalité";
+            flat.CollaboratorStreet = "Rieky";
+            flat.CollaboratorName = "Jano";
+            flat.Name = "new document";
+
+            Document document = flat;
+
+            DocumentFlat f = (DocumentFlat)document;
         }
     }
 
@@ -23,6 +30,8 @@
         public Contact Collaborator { get; set; }
 
         public string Name { get; set; }
+
+        public Settings Settings { get; set; }
     }
 
     public class Contact
@@ -38,10 +47,24 @@
         public string Street { get; set; }
     }
 
-    [Flatten(SourceType = typeof(Document))]
+    public class Settings
+    {
+        public string Currency { get; set; }
+    }
+
+    [Flatten(SourceType = typeof(Document),
+        DoNotFlatten = new string[] { nameof(Document.Settings) })]
     [FlattenPropertyName(SourcePropertyName = "Owner.Address.City", Name = "Town")]
     [FlattenPropertyName(SourcePropertyName = "Collaborator.Address", Name = "")]
     public partial class DocumentFlat
     {
+        public virtual DocumentFlat From(Document document)
+        {
+            DocumentFlat ret = new();
+
+            ret.CollaboratorCity = document.Collaborator.Address.City;
+
+            return ret;
+        }
     }
 }

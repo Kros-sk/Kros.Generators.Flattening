@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Kros.Generators.Flattening
 {
@@ -44,5 +46,33 @@ namespace Kros.Generators.Flattening
         /// Get or set new name for property.
         /// </summary>
         public string Name { get; init; }
+    }
+
+    /// <summary>
+    /// Interface which describe flat class.
+    /// </summary>
+    /// <typeparam name="TDest">The type of the dest.</typeparam>
+    public interface IFlat<TSource>
+    {
+        /// <summary>
+        /// Converts to full domain.
+        /// </summary>
+        TSource ToFull();
+    }
+
+    /// <summary>
+    /// <see cref="IEnumerable{T}"/> extensions.
+    /// </summary>
+    public static class EnumerableExtensions
+    {
+        /// <summary>
+        /// Converts to full domains.
+        /// </summary>
+        /// <typeparam name="TFlat">The type of the flat class.</typeparam>
+        /// <typeparam name="TFull">The type of the full domain class.</typeparam>
+        /// <param name="flats">The flats.</param>
+        public static IEnumerable<TFull> ToFull<TFlat, TFull>(this IEnumerable<TFlat> flats)
+            where TFlat : IFlat<TFull>
+            => flats.Select(f => f.ToFull());
     }
 }
