@@ -17,30 +17,30 @@ namespace {{ Namespace }}
         {{ prop.Modifier }} {{ prop.Type }} {{ prop.Name }} { get; set; }
     {{ end }}
 
-        public {{ SourceTypeFullName }} ToFull()
+        public {{ SourceTypeFullName }} ToComplex()
         {
             {{ SourceTypeFullName }} ret = new ();
 
-            {{ ToFullTemplate }}
+            {{ ToComplexTemplate }}
 
             return ret;
         }
 
-        public static {{ Name }} FromFull({{ SourceTypeFullName }} source)
+        public static {{ Name }} FromComplex({{ SourceTypeFullName }} source)
         {
             {{ Name }} ret = new();
 
-            ret.FillFromFull(source);
+            ret.FillFromComplex(source);
 
             return ret;
         }
 
-        public void FillFromFull({{ SourceTypeFullName }} source)
+        public void FillFromComplex({{ SourceTypeFullName }} source)
         {
             {{ ToFlattenTemplate }}
         }
 
-        public static implicit operator {{ SourceTypeFullName }}({{ Name }} s) => s.ToFull();
-        public static explicit operator {{ Name }}({{ SourceTypeFullName }} s) => {{ Name }}.FromFull(s);
+        public static implicit operator {{ SourceTypeFullName }}({{ Name }} s) => s.ToComplex();
+        public static explicit operator {{ Name }}({{ SourceTypeFullName }} s) => {{ Name }}.FromComplex(s);
     }
 }

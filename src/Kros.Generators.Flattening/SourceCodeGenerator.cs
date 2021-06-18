@@ -70,7 +70,7 @@ namespace Kros.Generators.Flattening
 
             GenerateToFullMethodBody(classModel.SourceProperties, sb, string.Empty);
 
-            classModel.ToFullTemplate = sb.ToString();
+            classModel.ToComplexTemplate = sb.ToString();
         }
 
         private static void GenerateToFullMethodBody(

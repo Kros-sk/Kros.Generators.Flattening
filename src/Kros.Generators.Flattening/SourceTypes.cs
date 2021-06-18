@@ -55,9 +55,9 @@ namespace Kros.Generators.Flattening
     public interface IFlat<TSource>
     {
         /// <summary>
-        /// Converts to full domain.
+        /// Converts to complex domain.
         /// </summary>
-        TSource ToFull();
+        TSource ToComplex();
     }
 
     /// <summary>
@@ -66,13 +66,13 @@ namespace Kros.Generators.Flattening
     public static class EnumerableExtensions
     {
         /// <summary>
-        /// Converts to full domains.
+        /// Converts to complex domains.
         /// </summary>
         /// <typeparam name="TFlat">The type of the flat class.</typeparam>
-        /// <typeparam name="TFull">The type of the full domain class.</typeparam>
+        /// <typeparam name="TComplex">The type of the complex domain class.</typeparam>
         /// <param name="flats">The flats.</param>
-        public static IEnumerable<TFull> ToFull<TFlat, TFull>(this IEnumerable<TFlat> flats)
-            where TFlat : IFlat<TFull>
-            => flats.Select(f => f.ToFull());
+        public static IEnumerable<TComplex> ToComplex<TFlat, TComplex>(this IEnumerable<TFlat> flats)
+            where TFlat : IFlat<TComplex>
+            => flats.Select(f => f.ToComplex());
     }
 }

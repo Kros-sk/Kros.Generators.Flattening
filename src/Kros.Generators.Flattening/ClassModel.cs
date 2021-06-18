@@ -43,7 +43,7 @@ namespace Kros.Generators.Flattening
 
         public string ToFlattenTemplate { get; set; }
 
-        public string ToFullTemplate { get; set; }
+        public string ToComplexTemplate { get; set; }
 
         public static ClassModel Create(ClassDeclarationSyntax syntax, Compilation compilation, GeneratorExecutionContext context)
         {
