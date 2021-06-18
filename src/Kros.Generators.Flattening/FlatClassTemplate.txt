@@ -5,15 +5,42 @@
 //------------------------------------------------------------------------------
 using System.CodeDom.Compiler;
 using System.Runtime.CompilerServices;
+using Kros.Generators.Flattening;
 
 namespace {{ Namespace }}
 {
     [GeneratedCode("Kros.Generators.Flattening", "{{ Version }}")]
     [CompilerGenerated]
-    {{ Modifier }} class {{ Name }}
+    {{ Modifier }} class {{ Name }}: IFlat<{{ SourceTypeFullName }}>
     {
     {{- for prop in Properties }}
         {{ prop.Modifier }} {{ prop.Type }} {{ prop.Name }} { get; set; }
-    {{ end -}}
+    {{ end }}
+
+        public {{ SourceTypeFullName }} ToComplex()
+        {
+            {{ SourceTypeFullName }} ret = new ();
+
+            {{ ToComplexTemplate }}
+
+            return ret;
+        }
+
+        public static {{ Name }} FromComplex({{ SourceTypeFullName }} source)
+        {
+            {{ Name }} ret = new();
+
+            ret.FillFromComplex(source);
+
+            return ret;
+        }
+
+        public void FillFromComplex({{ SourceTypeFullName }} source)
+        {
+            {{ ToFlattenTemplate }}
+        }
+
+        public static implicit operator {{ SourceTypeFullName }}({{ Name }} s) => s.ToComplex();
+        public static explicit operator {{ Name }}({{ SourceTypeFullName }} s) => {{ Name }}.FromComplex(s);
     }
 }

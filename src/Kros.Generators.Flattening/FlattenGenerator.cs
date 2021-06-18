@@ -16,8 +16,8 @@ namespace Kros.Generators.Flattening
 
         public void Execute(GeneratorExecutionContext context)
         {
-            context.AddSource("FlattenAttributes.cs",
-                SourceText.From(EmbeddedResource.GetContent("GeneratedAttributes.cs"), Encoding.UTF8));
+            context.AddSource("FlattenSourceTypes.cs",
+                SourceText.From(EmbeddedResource.GetContent("SourceTypes.cs"), Encoding.UTF8));
 
             if (context.SyntaxReceiver is FlattenReceiver actorSyntaxReciver)
             {
