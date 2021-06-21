@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>latest</LangVersion>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IsRoslynComponent>true</IsRoslynComponent>
     <PackageIcon>icon.png</PackageIcon>
@@ -13,7 +13,7 @@
   <PropertyGroup>
     <Authors>KROS a. s.</Authors>
     <Company>KROS a. s.</Company>
-    <Description>General utilities and helpers for building ASP.NET Core WEB API</Description>
+    <Description>Source generator for generating flatten classes from complex domain classes.</Description>
     <PackageProjectUrl>https://github.com/Kros-sk/Kros.Generators.Flattening</PackageProjectUrl>
     <PackageReleaseNotes>https://github.com/Kros-sk/Kros.Generators.Flattening/releases</PackageReleaseNotes>
     <PackageTags>Generators;Helpers;Utils;Flattening</PackageTags>

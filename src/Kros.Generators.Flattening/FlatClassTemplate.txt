@@ -9,8 +9,6 @@ using Kros.Generators.Flattening;
 
 namespace {{ Namespace }}
 {
-    [GeneratedCode("Kros.Generators.Flattening", "{{ Version }}")]
-    [CompilerGenerated]
     {{ Modifier }} class {{ Name }}: IFlat<{{ SourceTypeFullName }}>
     {
     {{- for prop in Properties }}
