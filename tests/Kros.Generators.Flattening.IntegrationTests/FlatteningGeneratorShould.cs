@@ -148,7 +148,6 @@ namespace Kros.Generators.Flattening.IntegrationTests
     [FlattenPropertyName(SourcePropertyName = "Purchaser.Address", Name = "")]
     public partial class DocumentFlaForMapping
     {
-
     }
 
     public class Foo
@@ -157,6 +156,7 @@ namespace Kros.Generators.Flattening.IntegrationTests
         {
             Name = firstName;
         }
+
         public string Name { get; set; }
     }
 

@@ -117,21 +117,18 @@ namespace Kros.Generators.Flattening.IntegrationTests
     [Flatten(SourceType = typeof(Document))]
     public partial class DocumentFlat : BaseClass
     {
-
     }
 
     [Flatten(SourceType = typeof(Document),
         Skip = new string[] { "Supplier.Name", "Supplier.PostalAddress.City" })]
     public partial class DocumentFlatWithSkipSubProperty : BaseClass
     {
-
     }
 
     [Flatten(SourceType = typeof(Document),
         DoNotFlatten = new string[] { nameof(Document.Supplier), "Purchaser.Address" })]
     public partial class DocumentFlatWithNoFlattenedProperties : BaseClass
     {
-
     }
 
     [Flatten(SourceType = typeof(Document))]
@@ -139,6 +136,5 @@ namespace Kros.Generators.Flattening.IntegrationTests
     [FlattenPropertyName(SourcePropertyName = "Purchaser.Address", Name = "")]
     public partial class DocumentFlatWithRenamedPriperties : BaseClass
     {
-
     }
 }
