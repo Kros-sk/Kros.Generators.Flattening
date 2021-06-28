@@ -168,6 +168,5 @@ namespace Kros.Generators.Flattening.IntegrationTests
     [Flatten(SourceType = typeof(Bar))]
     public partial class BarFlat
     {
-
     }
 }

@@ -11,7 +11,6 @@ namespace Kros.Generators.Flattening.IntegrationTests
     {
         public class AssertionHelper<T> where T : class
         {
-
             private HashSet<string> _properties = new();
 
             public AssertionHelper<T> HaveProperty<TProperty>(Expression<Func<T, TProperty>> propertyExptession)

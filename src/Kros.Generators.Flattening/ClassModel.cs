@@ -77,7 +77,6 @@ namespace Kros.Generators.Flattening
                 context.ReportException(ex);
                 return null;
             }
-
         }
 
         private void BasicInformation()
@@ -121,7 +120,6 @@ namespace Kros.Generators.Flattening
         {
             foreach (IPropertySymbol property in properties)
             {
-
                 string nameWithoutPrefix = GetName(namePrefix, namingMap, property);
                 string name = namePrefix + nameWithoutPrefix;
 
