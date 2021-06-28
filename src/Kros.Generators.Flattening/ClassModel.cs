@@ -3,6 +3,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Reflection;
 
@@ -22,7 +23,6 @@ namespace Kros.Generators.Flattening
         private CompilationUnitSyntax _root;
         private GeneratorExecutionContext _context;
         private readonly List<PropertyModel> _properties = new();
-        private readonly List<SourcePropertyModel> _sourceProperties = new();
         private INamedTypeSymbol _sourceType;
 
         public string Version => Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
@@ -31,19 +31,21 @@ namespace Kros.Generators.Flattening
 
         public string Name { get; private set; }
 
-        public string SourceTypeFullName { get; set; }
+        public string SourceTypeFullName { get; private set; }
 
-        public string SourceTypeName { get; set; }
+        public string SourceTypeName { get; private set; }
 
         public string Modifier { get; private set; }
 
         public IEnumerable<PropertyModel> Properties => _properties;
 
-        public IEnumerable<SourcePropertyModel> SourceProperties => _sourceProperties;
+        public List<SourcePropertyModel> SourceProperties { get; } = new();
 
         public string ToFlattenTemplate { get; set; }
 
         public string ToComplexTemplate { get; set; }
+
+        public bool CanGenerateMappingMethod { get; private set; } = true;
 
         public static ClassModel Create(ClassDeclarationSyntax syntax, Compilation compilation, GeneratorExecutionContext context)
         {
@@ -100,7 +102,7 @@ namespace Kros.Generators.Flattening
 
             ProcessProperties(
                 _sourceType.GetProperties(),
-                _sourceProperties,
+                SourceProperties,
                 existingProperties,
                 propertiesToSkip,
                 doNotFlatten,
@@ -125,14 +127,20 @@ namespace Kros.Generators.Flattening
 
                 if (!existingProperties.Contains(name) && !propertiesToSkip.Contains(name))
                 {
-                    SourcePropertyModel sourceProperty = new();
-                    sourceProperty.Name = property.Name;
+                    SourcePropertyModel sourceProperty = new()
+                    {
+                        Name = property.Name
+                    };
                     sourceProperties.Add(sourceProperty);
 
                     if (CanExpand(property) && !doNotFlatten.Contains(name))
                     {
+                        var propertyType = (property.Type as INamedTypeSymbol);
+                        var props = propertyType.GetProperties();
+                        CheckConstructorParams(sourceProperty, propertyType, props);
+
                         ProcessProperties(
-                            (property.Type as INamedTypeSymbol).GetProperties(), sourceProperty.SubProperties,
+                            props, sourceProperty.SubProperties,
                             existingProperties, propertiesToSkip, doNotFlatten, namingMap, namePrefix + nameWithoutPrefix);
                     }
                     else
@@ -144,6 +152,26 @@ namespace Kros.Generators.Flattening
                 }
             }
         }
+
+        private void CheckConstructorParams(
+            SourcePropertyModel sourceProperty,
+            INamedTypeSymbol propertyType,
+            IEnumerable<IPropertySymbol> props)
+        {
+            var constructor = propertyType.GetConstructor(PropertiesToHashSet(props));
+
+            if (constructor is null)
+            {
+                CanGenerateMappingMethod = false;
+            }
+            else if (constructor.Parameters.Length > 0)
+            {
+                sourceProperty.CtorParameters = constructor.Parameters.Select(p => p.Name);
+            }
+        }
+
+        private static HashSet<string> PropertiesToHashSet(IEnumerable<IPropertySymbol> props)
+            => new(props.Select(p => p.Name), StringComparer.InvariantCultureIgnoreCase);
 
         private static bool CanExpand(IPropertySymbol property)
             => !property.Type.IsValueType

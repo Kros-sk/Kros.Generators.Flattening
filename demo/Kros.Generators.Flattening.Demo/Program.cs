@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using AutoBogus;
+using AutoBogus.Conventions;
+using Microsoft.VisualBasic;
+using System.Collections.Generic;
 
 namespace Kros.Generators.Flattening.Demo
 {
@@ -7,19 +9,19 @@ namespace Kros.Generators.Flattening.Demo
     {
         static void Main(string[] args)
         {
-            DocumentFlat flat = new();
+            AutoFaker.Configure(builder =>
+            {
+                builder.WithConventions();
+            });
 
-            flat.OwnerAddressTown = "Žilina";
-            flat.OwnerAddressStreet = "Rudnaya";
-            flat.OwnerName = "Milan";
-            flat.CollaboratorCity = "Skalité";
-            flat.CollaboratorStreet = "Rieky";
-            flat.CollaboratorName = "Jano";
-            flat.Name = "new document";
+            DocumentFlat flat = AutoFaker.Generate<DocumentFlat>();
 
             Document document = flat;
 
-            DocumentFlat f = (DocumentFlat)document;
+            DocumentFlat flat2 = (DocumentFlat)document;
+
+            IEnumerable<DocumentFlat> flatDocuments = AutoFaker.Generate<DocumentFlat>(10);
+            IEnumerable<Document> documents = flatDocuments.ToComplex<DocumentFlat, Document>();
         }
     }
 
@@ -41,11 +43,7 @@ namespace Kros.Generators.Flattening.Demo
         public Address Address { get; set; }
     }
 
-    public class Address
-    {
-        public string City { get; set; }
-        public string Street { get; set; }
-    }
+    public record Address(string City, string Street);
 
     public class Settings
     {
@@ -58,13 +56,5 @@ namespace Kros.Generators.Flattening.Demo
     [FlattenPropertyName(SourcePropertyName = "Collaborator.Address", Name = "")]
     public partial class DocumentFlat
     {
-        public virtual DocumentFlat From(Document document)
-        {
-            DocumentFlat ret = new();
-
-            ret.CollaboratorCity = document.Collaborator.Address.City;
-
-            return ret;
-        }
     }
 }

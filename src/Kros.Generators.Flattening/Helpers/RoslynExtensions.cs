@@ -2,6 +2,7 @@
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 
 namespace Kros.Generators.Flattening
@@ -96,7 +97,7 @@ namespace Kros.Generators.Flattening
         }
 
         private static T GetArgument<T>(this AttributeSyntax attribute, string argumentName)
-            where T: ExpressionSyntax
+            where T : ExpressionSyntax
             => attribute
                 .ArgumentList
                 .Arguments
@@ -121,8 +122,20 @@ namespace Kros.Generators.Flattening
                 .OfType<IPropertySymbol>()
                 .Where(p =>
                     !p.IsReadOnly && !p.IsStatic
-                    && (p.DeclaredAccessibility == Accessibility.Public
-                        || p.DeclaredAccessibility == Accessibility.Internal
-                        || p.DeclaredAccessibility == Accessibility.ProtectedAndInternal));
+                    && p.IsAccessible());
+
+        private static bool IsAccessible(this ISymbol p)
+            => (p.DeclaredAccessibility == Accessibility.Public
+                || p.DeclaredAccessibility == Accessibility.Internal
+                || p.DeclaredAccessibility == Accessibility.ProtectedAndInternal);
+
+        public static IMethodSymbol GetConstructor(this INamedTypeSymbol type, HashSet<string> properties)
+            => type
+                .Constructors
+                .FirstOrDefault(p =>
+                    p.IsAccessible() && (p.Parameters.Length == 0 || p.Parameters.HasSameParameters(properties)));
+
+        private static bool HasSameParameters(this ImmutableArray<IParameterSymbol> parameters, HashSet<string> properties)
+            => parameters.Length == properties.Count && parameters.All(p => properties.Contains(p.Name));
     }
 }
