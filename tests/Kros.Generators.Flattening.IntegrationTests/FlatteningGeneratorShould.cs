@@ -2,6 +2,9 @@
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Kros.Generators.Flattening.IntegrationTests.Domains;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace Kros.Generators.Flattening.IntegrationTests
@@ -12,7 +15,7 @@ namespace Kros.Generators.Flattening.IntegrationTests
         public void MapFlatInstanceToComplex()
         {
             DocumentFlaForMapping flat = AutoFaker.Generate<DocumentFlaForMapping>();
-            Document document = flat;
+            MyDocument document = flat;
 
             using (new AssertionScope())
             {
@@ -37,13 +40,15 @@ namespace Kros.Generators.Flattening.IntegrationTests
                 document.Supplier.PostalAddress.Street.Should().Be(flat.SupplierPostalAddressStreet);
                 document.VatPayerType.Should().Be(flat.VatPayerType);
                 document.VatTotalPrice.Should().Be(flat.VatTotalPrice);
+                document.Settings.Currency.Should().Be(flat.SettingsCurrency);
+                document.Settings.MinimalValue.Should().Be(flat.SettingsMinimalValue);
             }
         }
 
         [Fact]
         public void MapComplexInstanceToFlat()
         {
-            Document document = AutoFaker.Generate<Document>();
+            MyDocument document = AutoFaker.Generate<MyDocument>();
             var flat = (DocumentFlaForMapping)document;
 
             using (new AssertionScope())
@@ -69,13 +74,15 @@ namespace Kros.Generators.Flattening.IntegrationTests
                 flat.SupplierPostalAddressStreet.Should().Be(document.Supplier.PostalAddress.Street);
                 flat.VatPayerType.Should().Be(document.VatPayerType);
                 flat.VatTotalPrice.Should().Be(document.VatTotalPrice);
+                flat.SettingsCurrency.Should().Be(document.Settings.Currency);
+                flat.SettingsMinimalValue.Should().Be(document.Settings.MinimalValue);
             }
         }
 
         [Fact]
         public void MapComplexInstanceToFlatWhenSomePropertiesAreNull()
         {
-            Document document = AutoFaker.Generate<Document>();
+            MyDocument document = AutoFaker.Generate<MyDocument>();
             document.Purchaser = null;
             document.Supplier.Address = null;
 
@@ -104,14 +111,62 @@ namespace Kros.Generators.Flattening.IntegrationTests
                 flat.SupplierPostalAddressStreet.Should().Be(document.Supplier.PostalAddress.Street);
                 flat.VatPayerType.Should().Be(document.VatPayerType);
                 flat.VatTotalPrice.Should().Be(document.VatTotalPrice);
+                flat.SettingsCurrency.Should().Be(document.Settings.Currency);
+                flat.SettingsMinimalValue.Should().Be(document.Settings.MinimalValue);
             }
+        }
+
+        [Fact]
+        public void DoNotGenerateMappingMethodWhenConstructorDoesNotMatchProperties()
+        {
+            typeof(BarFlat).Should().NotHaveMethod("ToComplex", Enumerable.Empty<Type>());
+            typeof(BarFlat).Should().NotHaveMethod("FillFromComplex", new List<Type>() { typeof(Bar) });
+            typeof(BarFlat).Should().NotImplement<IFlat<Bar>>();
         }
     }
 
-    [Flatten(SourceType = typeof(Document))]
+    public class Settings
+    {
+        public Settings(string currency, int minimalValue)
+        {
+            MinimalValue = minimalValue;
+            Currency = currency;
+        }
+
+        public int MinimalValue { get; set; }
+
+        public string Currency { get; set; }
+    }
+
+    public class MyDocument: Document
+    {
+        public Settings Settings { get; set; }
+    }
+
+    [Flatten(SourceType = typeof(MyDocument))]
     [FlattenPropertyName(SourcePropertyName = "Supplier.Address.City", Name = "Town")]
     [FlattenPropertyName(SourcePropertyName = "Purchaser.Address", Name = "")]
     public partial class DocumentFlaForMapping
+    {
+
+    }
+
+    public class Foo
+    {
+        public Foo(string firstName)
+        {
+            Name = firstName;
+        }
+        public string Name { get; set; }
+    }
+
+    public class Bar
+    {
+        public Foo Foo { get; set; }
+    }
+
+    [Flatten(SourceType = typeof(Bar))]
+    public partial class BarFlat
     {
 
     }
