@@ -11,5 +11,7 @@ namespace Kros.Generators.Flattening
         public List<SourcePropertyModel> SubProperties { get; set; } = new();
 
         public override string ToString() => $"{Name} -> {TargetPropertyName}";
+
+        public IEnumerable<string> CtorParameters { get; set; } = null;
     }
 }

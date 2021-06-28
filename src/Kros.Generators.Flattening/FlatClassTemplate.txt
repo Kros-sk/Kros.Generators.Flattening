@@ -9,12 +9,13 @@ using Kros.Generators.Flattening;
 
 namespace {{ Namespace }}
 {
-    {{ Modifier }} class {{ Name }}: IFlat<{{ SourceTypeFullName }}>
+    {{ Modifier }} class {{ Name ~}}{{~ if CanGenerateMappingMethod ~}}: IFlat<{{ SourceTypeFullName }}> {{ end }}
     {
     {{- for prop in Properties }}
         {{ prop.Modifier }} {{ prop.Type }} {{ prop.Name }} { get; set; }
     {{ end }}
-
+    
+{{ if CanGenerateMappingMethod }}
         public {{ SourceTypeFullName }} ToComplex()
         {
             {{ SourceTypeFullName }} ret = new ();
@@ -40,5 +41,6 @@ namespace {{ Namespace }}
 
         public static implicit operator {{ SourceTypeFullName }}({{ Name }} s) => s.ToComplex();
         public static explicit operator {{ Name }}({{ SourceTypeFullName }} s) => {{ Name }}.FromComplex(s);
+{{ end }}
     }
 }

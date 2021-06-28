@@ -112,3 +112,60 @@ If you want to rename the output property, use the `FlattenPropertyName` attribu
 [FlattenPropertyName(SourcePropertyName = "Owner.Address.City", Name = "Town")]
 [FlattenPropertyName(SourcePropertyName = "Collaborator.Address", Name = "")]
 ```
+
+## Mapping
+
+This generator also generates `ToComplex` and `FromComplex` mapping methods for you.
+
+### ToComplex
+
+Allows you to map a flat instance to its complex domain form.
+
+```csharp
+DocumentFlat flat = new()
+{
+    OwnerAddressTown = "Wichita, KS 67202",
+    OwnerAddressStreet = "1938 Roosevelt Road",
+    OwnerName = "Jill A. Spurgeon",
+    CollaboratorCity = "8282 Koprivnica",
+    CollaboratorStreet = "Kolodvorska 28",
+    CollaboratorName = "Christine M. Dudley",
+    Name = "new document"
+};
+
+Document document = flat.ToComplex();
+```
+
+Or simply use the implicit conversion.
+
+```csharp
+Document document = flat;
+```
+
+### FromComplex
+
+It allows you to create a flattened instance of your complex domain class.
+
+```csharp
+DocumentFlat flat = DocumentFlat.FromComplex(document);
+```
+
+Or simply use the explicit conversion.
+
+```csharp
+DocumentFlat flat = (DocumentFlat)document;
+```
+
+### IEnumerable.ToComplex
+
+It is possible to convert an entire collection of flattened instances to a collection of complex objects.
+
+```csharp
+IEnumerable<DocumentFlat> flatDocuments = LoadData();
+
+IEnumerable<Document> documents = flatDocuments.ToComplex<DocumentFlat, Document>();
+```
+
+## Limitation
+
+⚠ Mapping methods are generated only if all types contain a public parameterless constructor or a constructor that has the same parameters as the properties (case insensitive).
